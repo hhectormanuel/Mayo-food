@@ -1,17 +1,27 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { AuthContext } from '../context/AuthContext'
 
 export const LoginPage = () => {
 
-    const { iniciarSesion } = useContext(AuthContext)
+    const nombre = "hector"
+    const password = "111"
+    const [name, setName] = useState('')
+    const [pass, setPass] = useState('')
+    //const { iniciarSesion } = useContext(AuthContext)
+    const auth = function(user, password) {
+      if (user === "hector" && password === "111"){
+        useContext(AuthContext)
+      }
+    }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignContent: 'center' , alignItems: 'center'}}>
         <Text style={{ color: 'black', fontWeight: 'bold' }}>Email...</Text>
         <TextInput
         placeholder="Ingresa tu email..."
+        onChangeText={name => setName(name)}
         style={styles.input}
       />
 
@@ -19,9 +29,10 @@ export const LoginPage = () => {
         <TextInput
          placeholder="Ingresa tu password..."
         style={{...styles.input, marginBottom: 50}}
+        onChangeText={pass => setPass(pass)}
       />    
 
-      <Button onPress={ () => iniciarSesion() } title='INICIAR SESION'/>
+      <Button onPress={ () => auth(name, pass) } title='INICIAR SESION'/>
     </View>
   )
 }
