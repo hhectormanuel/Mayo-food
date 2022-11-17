@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { AuthContext } from '../context/AuthContext'
+import {check, PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 export const LoginPage = () => {
 
@@ -9,11 +10,12 @@ export const LoginPage = () => {
     const password = "111"
     const [name, setName] = useState('')
     const [pass, setPass] = useState('')
-    //const { iniciarSesion } = useContext(AuthContext)
-    const auth = function(user, password) {
-      if (user === "hector" && password === "111"){
-        useContext(AuthContext)
-      }
+    const { iniciarSesion } = useContext(AuthContext)
+
+    const requestPermissions = () => {
+      request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE).then((response) => {
+        console.log(response)
+      })
     }
 
   return (
@@ -32,7 +34,14 @@ export const LoginPage = () => {
         onChangeText={pass => setPass(pass)}
       />    
 
-      <Button onPress={ () => auth(name, pass) } title='INICIAR SESION'/>
+      <Button onPress={ () => 
+        {if (name == "Hector" && pass == "111" ){
+          iniciarSesion()
+          requestPermissions()
+        }
+      }
+      }
+        title='INICIAR SESION'/>
     </View>
   )
 }
