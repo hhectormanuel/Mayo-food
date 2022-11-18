@@ -48,7 +48,7 @@ export const NuevoPedidoScreen = () => {
             if( Precios[i] === undefined ){
                 break;
             }
-            total = total + Precios[i]
+            total = total + parseInt(Precios[i])
         }
 
         setTotal(total)
